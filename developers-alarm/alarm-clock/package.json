@@ -1,0 +1,15 @@
+{
+  "name": "developers-alarm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "sound-play": "^1.1.0"
+  }
+}
