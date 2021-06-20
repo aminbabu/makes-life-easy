@@ -3,22 +3,37 @@ const fs = require("fs");
 const path = require("path");
 const sound = require("sound-play");
 
-// Gives files and it's path
-const fileName = "tones/tone.mp3";
-const filePath = path.join(__dirname, fileName);
+// Set alarm files
+// You can change these file according to your interest
+const workFile = "tones/stop_doing_that.mp3";
+const restFile = "tones/work_calling.mp3";
 
-const alarmTime = 25;    // Here set your alarm time to the variable "alarmTime"
-const miliSecond = (alarmTime * 60) * 1000; // Converts minutes to mili-seconds
+// Give file's path
+const workAlarm = path.join(__dirname, workFile);
+const restAlarm = path.join(__dirname, restFile);
 
-// Function for playing alarm
-function playSound(err) {
-    if (err) {
-        console.error(err);
-    } else {
-        sound.play(filePath);
-        console.log("It's time to take rest!");
-    }
+const workTime = 25; // Set work time (minute)
+const restTime = 5; // Set rest time (minute)
+
+// Function to convert minute to milisecond
+function minuteToMS(minute) {
+  return minute * 60 * 1000;
 }
 
-// Ensures alarm will play after a certain time
-setInterval(playSound, miliSecond);
+const workMS = minuteToMS(workTime);
+const restMS = minuteToMS(restTime);
+
+// Function for playing alarm to take rest and start work
+(function playSound() {
+  setTimeout(() => {
+    // Work Time
+    sound.play(workAlarm);
+    console.log("Take Rest!\n");
+    setTimeout(() => {
+      // Rest Time
+      sound.play(restAlarm);
+      console.log("Start Work!\n");
+      playSound();
+    }, restMS);
+  }, workMS);
+})();
